@@ -1,0 +1,13 @@
+# Set Background Image
+feh --bg-fill /home/edcordata/Pictures/Wallpapers/nauro.jpg &
+
+# Start compositor
+#picom &
+
+# Start tint2 - taskbar
+tint2 &
+
+# Start other apps
+konsole &
+firefox &
+dolphin &

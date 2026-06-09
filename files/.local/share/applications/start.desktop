@@ -1,0 +1,6 @@
+[Desktop Entry]
+Type=Application
+Name=Start
+Exec=rofi -show drun
+Icon=start-here
+Terminal=false
