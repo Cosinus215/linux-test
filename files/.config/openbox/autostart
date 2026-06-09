@@ -1,8 +1,8 @@
 # Set Background Image
 feh --bg-fill /home/edcordata/Pictures/Wallpapers/nauro.jpg &
 
-# Start compositor
-#picom &
+# Start compositor (comment out to disable)
+picom --config ~/.config/picom/picom.conf &
 
 # Start tint2 - taskbar
 tint2 &

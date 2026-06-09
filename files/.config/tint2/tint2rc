@@ -1,44 +1,51 @@
-# Panel items:
+# Panel
 panel_items = LTSC
-
 panel_position = bottom center horizontal
 panel_size = 100% 40
+panel_margin = 0 0
+panel_padding = 0 0 0
 panel_background_id = 1
 
+# Background 1 - Taskbar background
 rounded = 0
 border_width = 1
+background_color = #2B2B2B 100
+border_color = #3A3A3A 100
 
-# Background definitions (Windows 10 taskbar dark theme)
+# Background 2 - Taskbar background for active/inactive tasks
 rounded = 0
-border_width = 1
-background_color = #2B2B2B FF
-border_color = #3A3A3A FF
+border_width = 0
+background_color = #3D3D3D 100
+border_color = #3D3D3A 100
+
+# Background 3 - Hover
+rounded = 0
+border_width = 0
+background_color = #505050 100
+border_color = #505050 100
 
 # Launcher ("Start")
 launcher_item_app = ~/.local/share/applications/start.desktop
 launcher_padding = 10 10 10
 
-# Tasks (Windows-like spacing)
+# Tasks
 task_centered = 0
 task_icon = 1
 task_text = 1
 task_maximum_size = 180 36
+task_font_color = #FFFFFF 100
+task_active_font_color = #FFFFFF 100
+task_background_id = 2
+task_active_background_id = 3
 
-# Task text colors (Windows 10 style)
-task_font_color = #FFFFFF FF
-task_active_font_color = #FFFFFF FF
-
-# Systray
+# System tray
 systray_padding = 6 6 6
 
-# Clock (Windows-like spacing)
+# Clock
 time1_format = %H:%M
 time2_format = %d.%m.%Y
 clock_padding = 10 6
-clock_font_color = #FFFFFF FF
+clock_font_color = #FFFFFF 100
 
 # Launcher icon tint
 launcher_icon_theme_override = 1
-
-# Panel foreground items
-font_color = #FFFFFF 100
