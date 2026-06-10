@@ -78,18 +78,22 @@ keys = [
 groups = [Group("default")]
 
 # ---------------------------------------------------------------------------
-# Layouts — all windows float (forced by hook below).
-# Max() is a dummy to keep Qtile's internals happy.
+# Layouts — all windows are inherently floating.
+# Use layout.Floating instead of a tiling layout + force-float hook.
 # ---------------------------------------------------------------------------
-layouts = [layout.Max()]
+layouts = [
+    layout.Floating(
+        border_focus="#ff0000",    # TEMP: bright red for testing
+        border_normal="#00ff00",   # TEMP: bright green for testing
+        border_width=5,            # TEMP: thick to confirm borders work
+    )
+]
 
-# Floating window appearance (borders + decorations)
+# Floating window appearance (also controls windows matching float_rules)
 floating_layout = layout.Floating(
-    border_focus="#5294e2",    # focused border = blue accent
-    border_normal="#2c2c2c",   # unfocused border = dark grey
-    border_width=2,
-    fullscreen_border_width=0,
-    max_border_width=0,
+    border_focus="#ff0000",
+    border_normal="#00ff00",
+    border_width=5,
 )
 
 # ---------------------------------------------------------------------------
@@ -179,11 +183,3 @@ def startup():
     subprocess.Popen(["feh", "--bg-fill", wallpaper])
 
     subprocess.Popen(["konsole"])
-
-# ---------------------------------------------------------------------------
-# Force every new window to float
-# ---------------------------------------------------------------------------
-@hook.subscribe.client_new
-def float_all_windows(client):
-    """Make every window floating — no tiling, ever."""
-    client.floating = True
