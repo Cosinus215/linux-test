@@ -1,1 +1,1 @@
-openbox-session
+exec qtile start
