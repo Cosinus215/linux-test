@@ -31,10 +31,6 @@ Mouse
 
 import os
 import subprocess
-
-# Force local display — prevents issues when hostname contains hyphens
-os.environ["DISPLAY"] = ":0"
-
 from libqtile import bar, layout, widget, hook
 from libqtile.config import Click, Drag, Group, Key, Screen
 from libqtile.lazy import lazy
