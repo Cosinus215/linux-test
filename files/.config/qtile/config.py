@@ -5,7 +5,8 @@ Qtile Configuration — Windows 10 Inspired Minimal Setup
 Principles:
   - No tiling: all windows float freely (like a traditional desktop).
   - Single desktop (no virtual desktop switching).
-  - Bottom taskbar with: start button → taskbar window buttons → tray → clock.
+  - Bottom taskbar with: start button → taskbar window buttons → window
+    controls (min / max / close) → tray → clock.
   - rofi (Super+R / Start button) acts as the application launcher.
   - Always-visible window borders (focused = blue, unfocused = dark).
 
@@ -31,9 +32,11 @@ Mouse
 
 Window decorations:
   Borders are drawn by Qtile (blue focus, dark unfocused).
-  Titlebar buttons (minimize / maximize / close) come from each
-  application's own client-side decorations (CSD) — konsole, dolphin,
-  kate, and most modern apps include them by default.
+  Actual titlebars with min/max/close buttons are NOT supported by Qtile
+  natively (by design — it's a tiling WM).  As a workaround, clickable
+  window control buttons (─ □ ✕) live in the taskbar next to the tray,
+  operating on whichever window is focused.  Many modern apps (konsole,
+  dolphin, kate, firefox) also draw their own titlebars via CSD.
 """
 
 import os
@@ -149,6 +152,29 @@ screens = [
                     txt_minimized="#888888",
                     background="#2c2c2c",
                     foreground="#ffffff",
+                ),
+
+                # Window control buttons (operate on focused window)
+                widget.TextBox(
+                    text=" ─",
+                    foreground="#ffffff",
+                    background="#2c2c2c",
+                    mouse_callbacks={"Button1": lazy.window.toggle_minimize()},
+                    padding=5,
+                ),
+                widget.TextBox(
+                    text=" □",
+                    foreground="#ffffff",
+                    background="#2c2c2c",
+                    mouse_callbacks={"Button1": lazy.window.toggle_maximize()},
+                    padding=5,
+                ),
+                widget.TextBox(
+                    text=" ✕",
+                    foreground="#ffffff",
+                    background="#c42b1c",
+                    mouse_callbacks={"Button1": lazy.window.kill()},
+                    padding=5,
                 ),
 
                 # System tray (network, volume, battery, etc.)
