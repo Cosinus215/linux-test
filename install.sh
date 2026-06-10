@@ -12,7 +12,7 @@ function install_core_tools() {
     qtile feh rofi \
     dolphin konsole kate \
     wget curl git nano unzip neovim htop \
-    xterm;
+    xterm ttf-dejavu;
 }
 
 function update() {

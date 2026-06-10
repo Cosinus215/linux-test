@@ -14,7 +14,7 @@ Keybindings
 -----------
   Super+Return    terminal
   Super+R         rofi (app launcher / start menu)
-  Super+Q         close focused window
+  Super+Q         quit qtile (also terminates X server)
   Super+1..9      switch to workspace
   Super+Shift+1..9 move window to workspace
   Super+Shift+R   reload config
@@ -45,8 +45,8 @@ keys = [
     Key([mod], "Return", lazy.spawn("konsole")),
     # Application launcher (rofi acts as the start menu)
     Key([mod], "r", lazy.spawn("rofi -show drun")),
-    # Close focused window
-    Key([mod], "q", lazy.window.kill()),
+    # Quit qtile (which terminates X server since startx exec's it)
+    Key([mod], "q", lazy.shutdown()),
     # Reload config without restarting
     Key([mod, "shift"], "r", lazy.reload_config()),
     # Full restart
