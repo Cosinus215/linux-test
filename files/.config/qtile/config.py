@@ -1,22 +1,23 @@
 """
-Qtile Configuration ??? Windows 10 Inspired Minimal Setup
+Qtile Configuration — Windows 10 Inspired Minimal Setup
 ========================================================
 
 Principles:
   - No tiling: all windows float freely (like a traditional desktop).
-  - Bottom taskbar with: start button, workspace list, window title,
-    system tray, and clock.
-  - Always-visible window borders (focused = blue, unfocused = dark).
+  - Single desktop (no virtual desktop switching).
+  - Bottom taskbar with: start button → taskbar window buttons → tray → clock.
   - rofi (Super+R / Start button) acts as the application launcher.
-  - Super+Return opens a terminal (konsole by default).
+  - Always-visible window borders (focused = blue, unfocused = dark).
 
 Keybindings
 -----------
   Super+Return    terminal
   Super+R         rofi (app launcher / start menu)
+  Alt+F4          close focused window
+  Super+Up        toggle maximize
+  Super+Down      minimize
+  F11             toggle fullscreen
   Super+Q         quit qtile (also terminates X server)
-  Super+1..9      switch to workspace
-  Super+Shift+1..9 move window to workspace
   Super+Shift+R   reload config
   Super+Ctrl+R    restart qtile
   Alt+Tab         cycle windows
@@ -27,6 +28,12 @@ Mouse
   Super+drag       move floating window
   Super+right-drag resize floating window
   Super+middle-click bring window to front
+
+Window decorations:
+  Borders are drawn by Qtile (blue focus, dark unfocused).
+  Titlebar buttons (minimize / maximize / close) come from each
+  application's own client-side decorations (CSD) — konsole, dolphin,
+  kate, and most modern apps include them by default.
 """
 
 import os
@@ -45,6 +52,14 @@ keys = [
     Key([mod], "Return", lazy.spawn("konsole")),
     # Application launcher (rofi acts as the start menu)
     Key([mod], "r", lazy.spawn("rofi -show drun")),
+    # Close focused window (Alt+F4 — Windows standard)
+    Key(["mod1"], "F4", lazy.window.kill()),
+    # Toggle maximize
+    Key([mod], "Up", lazy.window.toggle_maximize()),
+    # Minimize
+    Key([mod], "Down", lazy.window.minimize()),
+    # Toggle fullscreen
+    Key([], "F11", lazy.window.toggle_fullscreen()),
     # Quit qtile (which terminates X server since startx exec's it)
     Key([mod], "q", lazy.shutdown()),
     # Reload config without restarting
@@ -57,17 +72,13 @@ keys = [
 ]
 
 # ---------------------------------------------------------------------------
-# Workspaces (up to 9, accessed via Super+[1-9])
+# Single desktop group (no virtual desktop switching)
 # ---------------------------------------------------------------------------
-groups = [Group(i) for i in ["1", "2", "3", "4", "5", "6", "7", "8", "9"]]
-
-for i, group in enumerate(groups):
-    key = str(i + 1)
-    keys.append(Key([mod], key, lazy.group[group.name].toscreen()))
-    keys.append(Key([mod, "shift"], key, lazy.window.togroup(group.name)))
+groups = [Group("default")]
 
 # ---------------------------------------------------------------------------
-# Layouts ??? empty on purpose: no tiling, everything floats
+# Layouts — all windows float (forced by hook below).
+# Max() is a dummy to keep Qtile's internals happy.
 # ---------------------------------------------------------------------------
 layouts = [layout.Max()]
 
@@ -110,13 +121,13 @@ widget_defaults = dict(
 extension_defaults = widget_defaults.copy()
 
 # ---------------------------------------------------------------------------
-# Bottom bar ??? Windows 10 style taskbar
+# Bottom taskbar — Windows 10 style
 # ---------------------------------------------------------------------------
 screens = [
     Screen(
         bottom=bar.Bar(
             [
-                # "Start" button ??? launches rofi
+                # "Start" button — launches rofi
                 widget.TextBox(
                     text=" Start ",
                     font="sans-serif",
@@ -127,41 +138,18 @@ screens = [
                     padding=8,
                 ),
 
-                # Workspace switcher (like virtual desktop buttons)
-                widget.GroupBox(
-                    font="sans-serif",
-                    fontsize=12,
-                    margin_x=2,
-                    margin_y=2,
-                    padding_x=4,
-                    padding_y=4,
+                # Taskbar buttons — one per open window (Windows 10 style)
+                widget.TaskList(
                     borderwidth=0,
-                    active="#ffffff",
-                    inactive="#888888",
-                    rounded=False,
-                    highlight_color="#5294e2",
-                    highlight_method="block",
-                    this_current_screen_border="#5294e2",
-                    this_screen_border="#444444",
-                    other_current_screen_border="#5294e2",
-                    other_screen_border="#444444",
-                    foreground="#ffffff",
+                    icon_size=0,
+                    padding=5,
+                    spacing=1,
+                    txt_active="#ffffff",
+                    txt_normal="#888888",
+                    txt_minimized="#888888",
                     background="#2c2c2c",
-                    disable_drag=True,
-                ),
-
-                # Title of currently focused window
-                widget.WindowName(
-                    font="sans-serif",
-                    fontsize=12,
                     foreground="#ffffff",
-                    background="#2c2c2c",
-                    padding=10,
-                    width=bar.CALCULATED,
                 ),
-
-                # Push everything right of the window title
-                widget.Spacer(background="#2c2c2c"),
 
                 # System tray (network, volume, battery, etc.)
                 widget.Systray(background="#2c2c2c", padding=5),
@@ -196,5 +184,5 @@ def startup():
 # ---------------------------------------------------------------------------
 @hook.subscribe.client_new
 def float_all_windows(client):
-    """Make every window floating ??? no tiling, ever."""
+    """Make every window floating — no tiling, ever."""
     client.floating = True
