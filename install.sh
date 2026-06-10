@@ -9,7 +9,7 @@ function start() {
 }
 
 function configure_hostname() {
-  # Ensure the hostname resolves to localhost — X11 needs this for
+  # Ensure the hostname resolves to localhost ??? X11 needs this for
   # MIT-MAGIC-COOKIE auth (hyphens in hostnames can break name resolution).
   local host
   host=$(hostname)
