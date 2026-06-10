@@ -1,4 +1,1 @@
-﻿#!/bin/bash
-
-cp -rf ./files/. "$HOME/";
-startx;
+﻿#!/bin/bashcp -rf ./files/. "$HOME/";startx;
