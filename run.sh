@@ -2,4 +2,4 @@
 
 cp -rf ./files/. "$HOME/";
 chmod +x "$HOME/.xinitrc";
-startx;
+xinit "$HOME/.xinitrc" -- :0
