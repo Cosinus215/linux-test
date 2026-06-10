@@ -6,7 +6,7 @@ function start() {
 }
 
 function install_core_tools() {
-  sudo pacman -S --needed \
+  sudo pacman -S --noconfirm --needed \
     xorg-server xorg-xinit xorg-xauth xorg-xprop \
     xf86-video-amdgpu xf86-video-intel mesa \
     qtile feh rofi \
@@ -16,9 +16,9 @@ function install_core_tools() {
 }
 
 function update() {
-  sudo pacman -Syu;
-  sudo pacman -S --needed base-devel python-pip;
-  sudo pacman -Syu;
+  sudo pacman -Syu --noconfirm;
+  sudo pacman -S --noconfirm --needed base-devel python-pip;
+  sudo pacman -Syu --noconfirm;
 }
 
 start;
