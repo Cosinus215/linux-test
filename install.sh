@@ -20,6 +20,8 @@ function configure_hostname() {
 
 function copy_files() {
   cp -rf ./files/. "$HOME/";
+  chmod +x "$HOME/.xinitrc";
+  chmod +x "$(dirname "$0")/run.sh";
 }
 
 function install_core_tools() {
