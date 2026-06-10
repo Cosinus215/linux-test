@@ -4,7 +4,18 @@ function start() {
   #update;
   #install_core_tools;
   install_qtile;
+  configure_hostname;
   copy_files;
+}
+
+function configure_hostname() {
+  # Ensure the hostname resolves to localhost — X11 needs this for
+  # MIT-MAGIC-COOKIE auth (hyphens in hostnames can break name resolution).
+  local host
+  host=$(hostname)
+  if ! grep -q "$host" /etc/hosts 2>/dev/null; then
+    echo "127.0.1.1 $host" | sudo tee -a /etc/hosts > /dev/null
+  fi
 }
 
 function copy_files() {
