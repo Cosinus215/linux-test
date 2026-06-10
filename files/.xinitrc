@@ -1,1 +1,1 @@
-exec qtile start
+DISPLAY=0 exec qtile start
