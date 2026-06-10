@@ -1,5 +1,5 @@
 """
-Qtile Configuration — Windows 10 Inspired Minimal Setup
+Qtile Configuration ??? Windows 10 Inspired Minimal Setup
 ========================================================
 
 Principles:
@@ -67,9 +67,9 @@ for i, group in enumerate(groups):
     keys.append(Key([mod, "shift"], key, lazy.window.togroup(group.name)))
 
 # ---------------------------------------------------------------------------
-# Layouts — empty on purpose: no tiling, everything floats
+# Layouts ??? empty on purpose: no tiling, everything floats
 # ---------------------------------------------------------------------------
-layouts = []
+layouts = [layout.Max()]
 
 # Floating window appearance (borders + decorations)
 floating_layout = layout.Floating(
@@ -110,13 +110,13 @@ widget_defaults = dict(
 extension_defaults = widget_defaults.copy()
 
 # ---------------------------------------------------------------------------
-# Bottom bar — Windows 10 style taskbar
+# Bottom bar ??? Windows 10 style taskbar
 # ---------------------------------------------------------------------------
 screens = [
     Screen(
         bottom=bar.Bar(
             [
-                # "Start" button — launches rofi
+                # "Start" button ??? launches rofi
                 widget.TextBox(
                     text=" Start ",
                     font="sans-serif",
@@ -196,5 +196,5 @@ def startup():
 # ---------------------------------------------------------------------------
 @hook.subscribe.client_new
 def float_all_windows(client):
-    """Make every window floating — no tiling, ever."""
+    """Make every window floating ??? no tiling, ever."""
     client.floating = True
